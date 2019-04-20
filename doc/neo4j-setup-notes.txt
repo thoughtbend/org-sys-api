@@ -1,0 +1,16 @@
+docker pull neo4j
+-- cloud have done 'docker pull neo4j:3.5.4'
+
+mkdir $HOME/container_home/neo4j-data/ea-mgr-data
+
+docker run --publish=7474:7474 --publish=7687:7687 --volume=$HOME/container_home/neo4j-data/ea-mgr-data:/data -rm neo4j
+
+http://localhost:7474/
+
+# default login is 'neo4j/neo4j'
+# changed password to 'P4ssw0rd'
+
+# Create Node
+# Apply 'org' email to the Node
+
+# Added 'org-sys-api' user w/ Password 'P4ssw0rd'
