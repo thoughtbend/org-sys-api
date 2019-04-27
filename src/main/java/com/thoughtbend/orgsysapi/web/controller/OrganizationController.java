@@ -55,15 +55,6 @@ public class OrganizationController {
 			LOG.trace("Entering GET - organization");
 		}
 		
-		/*final Organization org = new Organization();
-		org.setId(UUID.randomUUID());
-		org.setName("My Org 1");
-		
-		final Organization org2 = new Organization();
-		org2.setId(UUID.randomUUID());
-		org2.setName("My Org 2");*/
-		
-		
 		final List<Organization> orgList = new ArrayList<Organization>();
 		//orgList.add(org);
 		//orgList.add(org2);

@@ -7,6 +7,8 @@ import static org.mockito.Mockito.mockitoSession;
 import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
 import java.util.UUID;
 
@@ -23,6 +25,7 @@ import org.springframework.hateoas.LinkBuilder;
 import org.springframework.hateoas.Resource;
 import org.springframework.hateoas.Resources;
 import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpStatus;
 
 import com.thoughtbend.orgsysapi.data.entity.OrganizationNode;
 import com.thoughtbend.orgsysapi.data.repository.OrganizationRepository;
@@ -30,6 +33,11 @@ import com.thoughtbend.orgsysapi.web.resource.Organization;
 
 @SpringBootTest
 public class OrganizationControllerTest {
+	
+	private static final class TestData {
+		final static String ORG_1_NAME = "org-1-name";
+		final static String ORG_2_NAME = "org-2-name";
+	}
 
 	@Mock
 	private LinkBuilder mockLinkBuilder;
@@ -49,10 +57,12 @@ public class OrganizationControllerTest {
 		List<OrganizationNode> orgNodeFixtures = new ArrayList<>();
 		OrganizationNode orgNode1 = new OrganizationNode();
 		orgNode1.setId(UUID.randomUUID().toString());
+		orgNode1.setName(TestData.ORG_1_NAME);
 		orgNodeFixtures.add(orgNode1);
 		
 		OrganizationNode orgNode2 = new OrganizationNode();
 		orgNode2.setId(UUID.randomUUID().toString());
+		orgNode2.setName(TestData.ORG_2_NAME);
 		orgNodeFixtures.add(orgNode2);
 		
 		when(this.mockOrgRepo.findAll()).thenReturn(orgNodeFixtures);
@@ -63,6 +73,18 @@ public class OrganizationControllerTest {
 		HttpEntity<Resources<Resource<Organization>>> result = this.target.getOrganizations();
 
 		assertNotNull(result, "result should not be null");
-		assertEquals(2, result.getBody().getContent().size());
+		
+		Collection<Resource<Organization>> organizationResourceResultList = result.getBody().getContent();
+		
+		assertEquals(2, organizationResourceResultList.size());
+		
+		Iterator<Resource<Organization>> organizationResourceResultIterator = organizationResourceResultList.iterator();
+		Resource<Organization> orgResourceResult1 = organizationResourceResultIterator.next();
+		assertEquals(orgNode1.getId(), orgResourceResult1.getContent().getId().toString());
+		assertEquals(TestData.ORG_1_NAME, orgResourceResult1.getContent().getName());
+		
+		Resource<Organization> orgResourceResult2 = organizationResourceResultIterator.next();
+		assertEquals(orgNode2.getId(), orgResourceResult2.getContent().getId().toString());
+		assertEquals(TestData.ORG_2_NAME, orgResourceResult2.getContent().getName());
 	}
 }
