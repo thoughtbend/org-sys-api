@@ -3,7 +3,6 @@ package com.thoughtbend.orgsysapi.web.controller;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.mockitoSession;
 import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
@@ -12,12 +11,9 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.UUID;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
-import org.springframework.beans.BeanUtils;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.hateoas.EntityLinks;
 import org.springframework.hateoas.Link;
@@ -25,7 +21,6 @@ import org.springframework.hateoas.LinkBuilder;
 import org.springframework.hateoas.Resource;
 import org.springframework.hateoas.Resources;
 import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpStatus;
 
 import com.thoughtbend.orgsysapi.data.entity.OrganizationNode;
 import com.thoughtbend.orgsysapi.data.repository.OrganizationRepository;
